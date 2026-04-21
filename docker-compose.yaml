@@ -1,0 +1,35 @@
+services:
+  generate_wallet_key:
+    image: 'gcr.io/o1labs-192920/mina-daemon:4.0.0-preflight1-b649c79-bookworm-mesa'
+    environment:
+      MINA_PRIVKEY_PASS: PssW0rD
+    entrypoint: []
+    command: >
+      bash -c '
+        mina advanced generate-keypair --privkey-path /data/.mina-config/keys/wallet-key
+        chmod -R 0700 /data/.mina-config/keys
+        chmod -R 0600 /data/.mina-config/keys/wallet-key
+      '
+    volumes:
+      - './node/mina-config:/data/.mina-config'
+  mina_block_producer:
+    image: 'gcr.io/o1labs-192920/mina-daemon:4.0.0-preflight1-b649c79-bookworm-mesa'
+    restart: always
+    environment:
+      MINA_PRIVKEY_PASS: PssW0rD
+    entrypoint: []
+    command: >
+      bash -c '
+        mina daemon \
+             --peer-list-url https://storage.googleapis.com/o1labs-gitops-infrastructure/mina-mesa-network/mina-mesa-network-seeds.txt \
+             --block-producer-key /data/.mina-config/keys/wallet-key \
+             --open-limited-graphql-port
+      '
+    volumes:
+      - './node/mina-config:/data/.mina-config'
+    ports:
+      - '8302:8302'
+      - '3085:3085'
+    depends_on:
+      generate_wallet_key:
+        condition: service_completed_successfully
