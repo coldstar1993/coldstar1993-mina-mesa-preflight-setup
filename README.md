@@ -23,7 +23,7 @@ but got the **same** error as the page bottom.
 
 
 ### Option1: steps as per discord suggestion
-With reference to [discord user's case](https://discord.com/channels/484437221055922177/1450202839430201506/1457622372830937184), kindly save the script into local [docker-compose.yaml](./docker-compose.yaml)
+With reference to [discord user's case](https://discord.com/channels/484437221055922177/1450202839430201506/1457622372830937184) and also [this sample](https://discord.com/channels/484437221055922177/1450202839430201506/1469471117944160380), kindly save the script into local [docker-compose.yaml](./docker-compose.yaml)
 
 then, execute the script below:
 ```
