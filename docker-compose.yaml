@@ -12,8 +12,9 @@ services:
       '
     volumes:
       - './node/mina-config:/data/.mina-config'
-  mina_block_producer:
+  mina_block_producer_mesa:
     image: 'gcr.io/o1labs-192920/mina-daemon:4.0.0-preflight1-b649c79-bookworm-mesa'
+    network_mode: host
     restart: always
     environment:
       MINA_PRIVKEY_PASS: PssW0rD
@@ -25,8 +26,9 @@ services:
         mina daemon \
              --peer-list-url https://storage.googleapis.com/o1labs-gitops-infrastructure/mina-mesa-network/mina-mesa-network-seeds.txt \
              --block-producer-key /data/.mina-config/keys/wallet-key \
-             --open-limited-graphql-port
-      '
+             --insecure-rest-server
+
+             '
     volumes:
       - './node/mina-config:/data/.mina-config'
     ports:
